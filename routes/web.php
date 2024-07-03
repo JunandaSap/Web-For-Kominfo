@@ -1,22 +1,25 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\OrderController;
-
-Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
-Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
-Route::post('/orders/{id}/pay', [OrderController::class, 'pay'])->name('orders.pay');
-Route::get('/history', [OrderController::class, 'history'])->name('orders.history');
-Route::delete('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
+use App\Http\Controllers\tambahBeritaController;
 
 Route::get('/', function () {
     return redirect('/login');
 })->middleware('auth');
 
-Route::get('/home', [LaundryController::class, 'index'])->middleware('auth');
+Route::get('/home', function () {
+    // You can change this to whatever you want to display on the home page
+    return view('home');
+});
+
+Route::get('/homeGuest', function () {
+    // You can change this to whatever you want to display on the home page
+    return view('homeGuest');
+});
+
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
@@ -29,3 +32,5 @@ Route::get('/pesanan', function () {
     return view('pesanan');
 })->middleware('auth');
 
+Route::get('/tambahberita', [tambahBeritaController::class, 'index'])->name('tambahBerita.index');
+Route::post('/tambahberita', [tambahBeritaController::class, 'store'])->name('tambahBerita.store');

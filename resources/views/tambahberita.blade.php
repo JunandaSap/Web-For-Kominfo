@@ -28,35 +28,40 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">FAQs</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('tambahBerita.index') }}">Input Berita</a>
-                </li>
             </ul>
         </div>
     </nav>
-
-    <section class="hero-section">
-        <div class="hero-text">
-            <h1>Washwiz Sipaling Solusi Cucianmu</h1>
-            <p>Warning <span class="text-warning">&#9888;</span></p>
-            <p>Disini dapat meringankan beban cucian mingguan maupun harianmu</p>
-            <a href="#products" class="btn btn-primary btn-lg">Kepoin yuu!!</a>
+    <form action="{{ route('tambahBerita.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" name="title" class="form-control" required>
         </div>
-        <div class="hero-img">
-            <img src="{{ asset('image/logo.png') }}" class="img-fluid" alt="Hero Image">
+        <div class="form-group">
+            <label for="image">Upload Image:</label>
+            <input type="file" name="image" class="form-control" required>
         </div>
-    </section>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div class="container mt-5">
+        <h2>Uploaded Images</h2>
+        <div class="row">
+            @foreach($beritas as $berita)
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="{{ asset($berita->image_path) }}" class="card-img-top" alt="{{ $berita->title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $berita->title }}</h5>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-mrcI6iIzuI2Gpjt3E2VGC0LEiWlS6z4XD2B57OeoN7t/6LU5co1p5lFfuYd7bs3" crossorigin="anonymous"></script>
-    <script>
-        document.querySelector('.btn-primary').addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector('#products').scrollIntoView({ behavior: 'smooth' });
-        });
-    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+        
